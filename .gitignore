@@ -23,3 +23,7 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 dist
+
+# Cloudflare / Obsidian vault note
+.wrangler/
+blog.iankitkumar.in.md
