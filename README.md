@@ -1,11 +1,13 @@
 # blog.iankitkumar.in
 
-Learning articles and posts for [blog.iankitkumar.in](https://blog.iankitkumar.in).
+Learning blog for [blog.iankitkumar.in](https://blog.iankitkumar.in), built with the [Brutal](https://github.com/eliancodes/brutal) neobrutalist Astro theme.
 
 ## Stack
 
-- [Astro](https://astro.build) static site
-- Markdown posts in `src/content/posts/`
+- Astro + Tailwind + Content Collections
+- Theme: Brutal (ElianCodes)
+- Hosting: Cloudflare Pages (`blog-iankitkumar-in`)
+- Posts: Markdown in `src/data/blog/`
 
 ## Local
 
@@ -14,13 +16,14 @@ npm install
 npm run dev
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy
 
-- Framework preset: **Astro**
-- Build command: `npm run build`
-- Output directory: `dist`
-- Node version: `22` (or newer)
+```bash
+npm run build
+wrangler pages deploy dist --project-name=blog-iankitkumar-in
+```
 
 ## Related
 
 - Portfolio: [iankitkumar.in](https://github.com/i-ankitkumar/iankitkumar.in)
+- Theme upstream: [eliancodes/brutal](https://github.com/eliancodes/brutal)

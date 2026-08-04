@@ -1,17 +1,42 @@
 {
   "name": "blog.iankitkumar.in",
+  "version": "1.0.0",
   "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
+  "description": "Learning blog for Ankit Kumar — Brutal (neobrutalist) Astro theme",
+  "author": {
+    "name": "Ankit Kumar",
+    "email": "mail@iankitkumar.in",
+    "url": "https://iankitkumar.in"
   },
+  "homepage": "https://blog.iankitkumar.in",
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "astro check && biome check .",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.1.6"
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
+    "@eliancodes/brutal-ui": "^0.2.7",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.13",
+    "astro": "^6.1.8",
+    "astro-font": "^1.1.0",
+    "satori": "^0.5.0",
+    "satori-html": "^0.3.2",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.1.13"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "@biomejs/biome": "^2.4.9",
+    "@resvg/resvg-js": "^2.6.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
   }
 }

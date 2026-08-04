@@ -1,0 +1,8 @@
+## blog.iankitkumar.in ##
+
+Learning blog by Ankit Kumar
+
+- email: mail@iankitkumar.in
+- portfolio: https://iankitkumar.in
+- github: https://github.com/i-ankitkumar
+- theme: Brutal by ElianCodes (https://github.com/eliancodes/brutal)
