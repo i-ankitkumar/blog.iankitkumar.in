@@ -4,3 +4,4 @@ dist
 # Obsidian vault note
 blog.iankitkumar.in.md
 .wrangler/
+.DS_Store
