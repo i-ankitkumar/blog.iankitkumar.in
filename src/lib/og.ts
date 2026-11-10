@@ -113,7 +113,11 @@ export async function renderOgCard(card: OgCard): Promise<Uint8Array> {
       paddingBottom: '22px',
     },
     [
-      node('div', { ...monoLabel, color: INK, width: CONTENT - RIGHT_COLUMN }, 'BLOG.IANKITKUMAR.IN'),
+      node(
+        'div',
+        { ...monoLabel, color: INK, width: CONTENT - RIGHT_COLUMN },
+        'BLOG.IANKITKUMAR.IN',
+      ),
       node(
         'div',
         { ...monoLabel, color: MUTED, width: RIGHT_COLUMN, textAlign: 'right' },
@@ -196,11 +200,7 @@ export async function renderOgCard(card: OgCard): Promise<Uint8Array> {
     },
     [
       node('div', { display: 'flex', width: CONTENT - RIGHT_COLUMN }, card.footer ?? 'ANKIT KUMAR'),
-      node(
-        'div',
-        { color: ACCENT, width: RIGHT_COLUMN, textAlign: 'right' },
-        'IANKITKUMAR.IN',
-      ),
+      node('div', { color: ACCENT, width: RIGHT_COLUMN, textAlign: 'right' }, 'IANKITKUMAR.IN'),
     ],
   )
 
