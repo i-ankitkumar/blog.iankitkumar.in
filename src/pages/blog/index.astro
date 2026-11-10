@@ -1,19 +1,28 @@
 ---
-import { getCollection } from 'astro:content';
-import BlogList from '@components/blog/BlogList.astro';
-import Layout from '@layouts/Default.astro';
+import Ledger from '~/components/Ledger.astro';
+import Base from '~/layouts/Base.astro';
+import { getPublishedPosts } from '~/lib/posts';
 
-const posts = await getCollection('blog').then((collection) =>
-  collection.reverse()
-);
+const posts = await getPublishedPosts();
 ---
 
-<Layout
-  title='Blog'
-  description='Brutal Blog | On this page you can find a collection of blogposts'
-  pageTitle='Brutal Blog'
+<Base
+  title="All notes"
+  description="Every published note in the log — DevOps, cloud, Splunk, Azure, Terraform, and automation."
 >
-  <main class='bg-green-theme p-6'>
-    <BlogList posts={posts} />
-  </main>
-</Layout>
+  <section class="masthead">
+    <div class="container">
+      <p class="label">Log · {posts.length} entries</p>
+      <h1>All notes</h1>
+      <p class="lede">
+        Every published entry, newest first. Each one is short, dated, and filed under a topic.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <Ledger posts={posts} />
+    </div>
+  </section>
+</Base>

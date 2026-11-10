@@ -1,0 +1,35 @@
+---
+import Ledger from '~/components/Ledger.astro';
+import Base from '~/layouts/Base.astro';
+import { getPostsByTag, getTags } from '~/lib/posts';
+
+export async function getStaticPaths() {
+  const tags = await getTags();
+  return tags.map((entry) => ({
+    params: { tag: entry.slug },
+    props: { tag: entry.tag, slug: entry.slug },
+  }));
+}
+
+const { tag, slug } = Astro.props;
+const posts = await getPostsByTag(slug);
+---
+
+<Base title={`Topic: ${tag}`} description={`Every note filed under ${tag}.`}>
+  <section class="masthead">
+    <div class="container">
+      <p class="label">Topic · {posts.length} {posts.length === 1 ? 'note' : 'notes'}</p>
+      <h1>{tag}</h1>
+      <p class="lede">Every note filed under {tag}, newest first.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <Ledger posts={posts} />
+      <p style="margin-top: 2rem">
+        <a class="back-link" href="/topics/">← All topics</a>
+      </p>
+    </div>
+  </section>
+</Base>

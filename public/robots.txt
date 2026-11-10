@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
-Host: https://blog.iankitkumar.in/
+Allow: /
+
 Sitemap: https://blog.iankitkumar.in/sitemap-index.xml

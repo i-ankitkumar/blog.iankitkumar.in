@@ -1,0 +1,50 @@
+---
+import { getTags } from '~/lib/posts';
+import { SITE } from '~/lib/site';
+
+const tags = await getTags();
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div>
+      <h2>Log</h2>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">All notes</a></li>
+        <li><a href="/topics/">Topics</a></li>
+        <li><a href="/feed.xml">RSS feed</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Elsewhere</h2>
+      <ul>
+        <li><a href={SITE.portfolioUrl}>Portfolio</a></li>
+        <li><a href={SITE.github}>GitHub</a></li>
+        <li><a href={SITE.linkedin}>LinkedIn</a></li>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Topics</h2>
+      <ul>
+        {
+          tags.slice(0, 6).map((entry) => (
+            <li>
+              <a href={`/topics/${entry.slug}/`}>{entry.tag}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <p class="colophon">
+      <span>© {year} {SITE.name}</span>
+      <span>{SITE.hosting}</span>
+      <span>Astro · no trackers</span>
+    </p>
+  </div>
+</footer>

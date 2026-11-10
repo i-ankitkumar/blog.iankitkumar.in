@@ -1,0 +1,32 @@
+---
+import { SITE } from '~/lib/site';
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => {
+  const path = href.replace(/\/$/, '') || '/';
+  return path === current;
+};
+---
+
+<header class="site-header">
+  <div class="container">
+    <a class="wordmark" href="/">
+      {SITE.blogName}<span>· field log</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      {
+        SITE.nav.map((item) => (
+          <a
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener' : undefined}
+            aria-current={!item.external && isCurrent(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+            {item.external && <span aria-hidden="true"> ↗</span>}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

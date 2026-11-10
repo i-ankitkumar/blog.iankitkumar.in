@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      # `npm ci` installs the platform binaries for sharp and esbuild as
+      # optional dependencies. Their install scripts are denied in
+      # package.json (`allowScripts`), so the build never tries to
+      # compile either one from source.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx astro check
+
+      - name: Lint and format check
+        run: npx biome check .
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify the build produced the expected routes
+        run: |
+          for path in index.html blog/index.html feed.xml sitemap-index.xml 404.html; do
+            test -f "dist/$path" || { echo "missing dist/$path"; exit 1; }
+          done
+          test -f dist/og/default.png || { echo "missing dist/og/default.png"; exit 1; }
