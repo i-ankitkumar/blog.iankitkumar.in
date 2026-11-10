@@ -113,7 +113,7 @@ export async function renderOgCard(card: OgCard): Promise<Uint8Array> {
       paddingBottom: '22px',
     },
     [
-      node('div', { ...monoLabel, color: INK }, 'BLOG.IANKITKUMAR.IN'),
+      node('div', { ...monoLabel, color: INK, width: CONTENT - RIGHT_COLUMN }, 'BLOG.IANKITKUMAR.IN'),
       node(
         'div',
         { ...monoLabel, color: MUTED, width: RIGHT_COLUMN, textAlign: 'right' },
@@ -195,10 +195,10 @@ export async function renderOgCard(card: OgCard): Promise<Uint8Array> {
       color: MUTED,
     },
     [
-      node('div', { display: 'flex' }, card.footer ?? 'ANKIT KUMAR'),
+      node('div', { display: 'flex', width: CONTENT - RIGHT_COLUMN }, card.footer ?? 'ANKIT KUMAR'),
       node(
         'div',
-        { display: 'flex', color: ACCENT, width: RIGHT_COLUMN, textAlign: 'right' },
+        { color: ACCENT, width: RIGHT_COLUMN, textAlign: 'right' },
         'IANKITKUMAR.IN',
       ),
     ],
@@ -207,8 +207,11 @@ export async function renderOgCard(card: OgCard): Promise<Uint8Array> {
   const root = node(
     'div',
     {
-      width: WIDTH,
-      height: HEIGHT,
+      // Satori treats the root's width and height as the content box and
+      // adds the padding on top, so the canvas comes out at 1200x630
+      // only if the root itself is the inset size.
+      width: CONTENT,
+      height: HEIGHT - 128,
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
@@ -224,7 +227,6 @@ export async function renderOgCard(card: OgCard): Promise<Uint8Array> {
         {
           display: 'flex',
           flexDirection: 'column',
-          flexGrow: 1,
           justifyContent: 'center',
           paddingBlock: '36px',
         },
