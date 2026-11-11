@@ -11,6 +11,7 @@ what has been built; this holds the notes.
 
 - [Astro 7](https://astro.build) — static output, content collections
 - Plain CSS with a token layer (`src/styles/tokens.css`), no framework
+- Light and dark themes, with a toggle that overrides the system preference
 - Self-hosted IBM Plex Sans / IBM Plex Mono — no third-party request at runtime
 - [Satori](https://github.com/vercel/satori) + resvg for Open Graph cards, rendered at build time
 - Biome for lint and format, `astro check` for types

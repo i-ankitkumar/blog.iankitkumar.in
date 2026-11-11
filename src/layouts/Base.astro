@@ -50,13 +50,12 @@ const siteJsonLd = {
 ---
 
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="auto">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#F8F6EF" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F8F6EF" id="theme-color" />
     <meta name="color-scheme" content="light dark" />
 
     <title>{pageTitle}</title>
@@ -86,6 +85,35 @@ const siteJsonLd = {
     {tags.map((tag) => <meta property="article:tag" content={tag} />)}
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(siteJsonLd)} />
+
+    <!-- Theme bootstrap — runs before paint so the page never flashes
+         the wrong theme. The attribute is what the token layer keys on:
+         an explicit choice here beats the system preference in both
+         directions, which is the whole point of the toggle. -->
+    <script is:inline>
+      (() => {
+        // Storage can throw: Firefox "Block cookies and site data", an
+        // enterprise MDM policy, dom.storage.enabled=false, or Safari
+        // private browsing. An unguarded read here would abort the
+        // bootstrap before the theme is applied.
+        let stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {
+          stored = null;
+        }
+        const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : prefersDark
+              ? 'dark'
+              : 'light';
+        document.documentElement.dataset.theme = theme;
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#171614' : '#F8F6EF');
+      })();
+    </script>
   </head>
   <body>
     <Header />
@@ -93,5 +121,51 @@ const siteJsonLd = {
       <slot />
     </main>
     <Footer />
+
+    <script>
+      const root: HTMLElement = document.documentElement;
+      const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+      const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+
+      // Persist the theme without letting a storage failure abort the
+      // caller. Order matters: the DOM state is written first, so a
+      // throwing setItem can never leave the button out of sync with
+      // the page.
+      const persist = (t: 'light' | 'dark') => {
+        try {
+          localStorage.setItem('theme', t);
+        } catch {
+          // Storage is blocked. The theme still applies for this session.
+        }
+      };
+
+      // One state, one writer. The theme attribute, the browser chrome
+      // colour, and the button's accessible name are written together,
+      // so the visible word and the announced name can never contradict
+      // each other.
+      const apply = (t: 'light' | 'dark') => {
+        root.dataset.theme = t;
+        meta?.setAttribute('content', t === 'dark' ? '#171614' : '#F8F6EF');
+        // The visible word is CSS-driven from [data-theme]. The accessible
+        // name names the same current theme plus the action the button
+        // performs, and starts with the visible word so it satisfies
+        // "Label in Name".
+        toggle?.setAttribute(
+          'aria-label',
+          t === 'dark'
+            ? 'Dark mode, on. Switch to light mode.'
+            : 'Light mode, on. Switch to dark mode.',
+        );
+        persist(t);
+      };
+
+      toggle?.addEventListener('click', () => {
+        const next: 'light' | 'dark' = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(next);
+      });
+
+      // Reflect the initial state on the button.
+      apply(root.dataset.theme === 'dark' ? 'dark' : 'light');
+    </script>
   </body>
 </html>

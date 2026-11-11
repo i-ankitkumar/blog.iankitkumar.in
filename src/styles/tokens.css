@@ -64,26 +64,31 @@
   --shadow: 4px 4px 0 0 var(--rule-strong);
 }
 
-/* Dark: the same sheet, under a desk lamp. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
+/* Dark: the same sheet, under a desk lamp.
+ *
+ * The palette is keyed on the `data-theme` attribute rather than a media
+ * query, so an explicit choice beats the system preference. The attribute
+ * is set before the first paint by the bootstrap script in Base.astro,
+ * which resolves it from the stored preference or the system setting —
+ * so the page never flashes the wrong theme, and the toggle can override
+ * the system either way. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
 
-    --bg: #171614;
-    --surface: #201e1a;
-    --surface-2: #2a2823;
-    --fg: #efebe0;
-    --fg-soft: #cbc5b7;
-    --muted: #9c9486;
-    --rule: #3d3a33;
-    --rule-soft: #2e2c27;
-    --rule-strong: #efebe0;
+  --bg: #171614;
+  --surface: #201e1a;
+  --surface-2: #2a2823;
+  --fg: #efebe0;
+  --fg-soft: #cbc5b7;
+  --muted: #9c9486;
+  --rule: #3d3a33;
+  --rule-soft: #2e2c27;
+  --rule-strong: #efebe0;
 
-    --accent: #7fb0e3;
-    --accent-soft: #1c2632;
-    --tag: #e08a6e;
-    --tag-soft: #2c211c;
+  --accent: #7fb0e3;
+  --accent-soft: #1c2632;
+  --tag: #e08a6e;
+  --tag-soft: #2c211c;
 
-    --shadow: 4px 4px 0 0 var(--rule-strong);
-  }
+  --shadow: 4px 4px 0 0 var(--rule-strong);
 }

@@ -11,7 +11,9 @@ const isCurrent = (href: string) => {
 <header class="site-header">
   <div class="container">
     <a class="wordmark" href="/">
-      {SITE.blogName}<span>· field log</span>
+      <span class="wordmark-full">{SITE.blogName}</span>
+      <span class="wordmark-short">Blog</span>
+      <span class="wordmark-tag">· field log</span>
     </a>
     <nav class="site-nav" aria-label="Primary">
       {
@@ -27,6 +29,17 @@ const isCurrent = (href: string) => {
           </a>
         ))
       }
+      <!-- The visible word names the CURRENT theme; CSS picks it from
+           :root[data-theme] so it is right before the first paint and
+           cannot drift from the page. There is deliberately no static
+           aria-label: until the script runs, the accessible name is the
+           visible word, which is always correct. The script then names
+           the same current theme plus the action the button performs, so
+           the announced name can never contradict what is on screen. -->
+      <button class="theme-toggle" type="button" data-theme-toggle>
+        <span class="theme-label-light">Light</span>
+        <span class="theme-label-dark">Dark</span>
+      </button>
     </nav>
   </div>
 </header>
