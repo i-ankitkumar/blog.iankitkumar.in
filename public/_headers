@@ -1,8 +1,13 @@
 # Cloudflare Pages headers for blog.iankitkumar.in
 #
-# The site is a static build. Everything under /_astro/ is content-hashed
-# by Vite and can be cached forever; everything else is either a route or
-# a small file that changes with a deploy, so it is revalidated.
+# One rule per path. Pages applies every rule whose path matches and
+# concatenates a header that two rules both set, so a path may not
+# appear twice — and a rule that sets Cache-Control replaces Pages'
+# own default for that path rather than adding to it.
+#
+# The catch-all therefore carries only the security headers: Pages
+# already serves HTML with `public, max-age=0, must-revalidate`, and
+# the asset rules below replace that with a long immutable policy.
 
 /*
   X-Content-Type-Options: nosniff
@@ -22,6 +27,3 @@
 
 /feed.xml
   Cache-Control: public, max-age=1800
-
-/*
-  Cache-Control: public, max-age=0, must-revalidate
