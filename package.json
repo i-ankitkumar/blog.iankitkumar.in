@@ -1,8 +1,9 @@
 {
   "name": "blog.iankitkumar.in",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Learning blog for Ankit Kumar — Brutal (neobrutalist) Astro theme",
+  "private": true,
+  "description": "Field log for Ankit Kumar — DevOps, cloud, Splunk, Azure, Terraform, and infrastructure automation notes.",
   "author": {
     "name": "Ankit Kumar",
     "email": "mail@iankitkumar.in",
@@ -14,29 +15,31 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check && biome check .",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "astro check && biome check .",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=blog-iankitkumar-in --branch=main --commit-dirty=true",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "@eliancodes/brutal-ui": "^0.2.7",
-    "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.1.13",
-    "astro": "^6.1.8",
-    "astro-font": "^1.1.0",
-    "satori": "^0.5.0",
-    "satori-html": "^0.3.2",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^4.1.13"
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "astro": "^7.4.8",
+    "satori": "^0.63.2",
+    "satori-html": "^0.3.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
-    "@biomejs/biome": "^2.4.9",
-    "@resvg/resvg-js": "^2.6.0",
+    "@biomejs/biome": "^2.5.6",
     "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "wrangler": "^4.160.0"
+  },
+  "allowScripts": {
+    "esbuild": false,
+    "sharp": false,
+    "workerd": false
   }
 }

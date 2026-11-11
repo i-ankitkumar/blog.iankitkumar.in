@@ -1,7 +1,16 @@
+# Astro
 .astro
-node_modules
 dist
+
+# Dependencies
+node_modules
+
+# Cloudflare
+.wrangler
+
+# Editors and OS
+.DS_Store
+*.log
+
 # Obsidian vault note
 blog.iankitkumar.in.md
-.wrangler/
-.DS_Store

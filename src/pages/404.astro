@@ -1,17 +1,19 @@
 ---
-import ErrorPage from '@components/errors/404.astro';
-import RecentBlogPosts from '@components/generic/RecentBlogPosts.astro';
-import Layout from '@layouts/Default.astro';
+import Base from '~/layouts/Base.astro';
 ---
 
-<Layout
-  title='Page Not Found'
-  description='Page not found'
-  classList='h-full'
-  pageTitle='Page Not Found!'
->
-  <main class='bg-blue-theme px-6 py-24'>
-    <ErrorPage />
-    <RecentBlogPosts />
-  </main>
-</Layout>
+<Base title="Not found" description="That page is not in the log." noindex>
+  <section class="container">
+    <div class="notfound">
+      <p class="code">404</p>
+      <h1 style="margin-block: 1rem 0.75rem">This page is not in the log.</h1>
+      <p class="lede">
+        The address may have changed, or the note may never have existed. Everything that does
+        exist is one click away.
+      </p>
+      <p style="margin-top: 2rem">
+        <a class="back-link" href="/blog/">← All notes</a>
+      </p>
+    </div>
+  </section>
+</Base>

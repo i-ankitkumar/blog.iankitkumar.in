@@ -1,0 +1,41 @@
+---
+import Base from '~/layouts/Base.astro';
+import { getTags } from '~/lib/posts';
+
+const tags = await getTags();
+---
+
+<Base
+  title="Topics"
+  description="Every topic in the log, with the number of notes filed under each."
+>
+  <section class="masthead">
+    <div class="container">
+      <p class="label">Index · {tags.length} topics</p>
+      <h1>Topics</h1>
+      <p class="lede">
+        Every note is filed under one or more topics. This is the whole index, ranked by how much
+        has been written about each.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ul class="topic-grid">
+        {
+          tags.map((entry) => (
+            <li>
+              <a class="topic-card" href={`/topics/${entry.slug}/`}>
+                <h3>{entry.tag}</h3>
+                <span class="label">
+                  {entry.posts.length} {entry.posts.length === 1 ? 'note' : 'notes'}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>

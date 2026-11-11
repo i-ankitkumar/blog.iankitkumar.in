@@ -1,0 +1,2 @@
+# Old tag routes from the previous theme -> the new topic index.
+/blog/tags/* /topics/:splat 301

@@ -1,0 +1,113 @@
+---
+import type { MarkdownHeading } from 'astro';
+import Base from '~/layouts/Base.astro';
+import { formatDate, isoDate, readingTime, slugifyTag } from '~/lib/posts';
+
+export interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  author: string;
+  tags: string[];
+  headings: MarkdownHeading[];
+  body?: string;
+  ogImage: string;
+  jsonLd: Record<string, unknown>;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  author,
+  tags,
+  headings,
+  body,
+  ogImage,
+  jsonLd,
+} = Astro.props;
+
+const minutes = readingTime(body);
+const toc = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+<Base
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  ogType="article"
+  publishedTime={pubDate.toISOString()}
+  tags={tags}
+  jsonLd={jsonLd}
+>
+  <article class="post">
+    <div class="container">
+      <header class="post-head">
+        <p class="label">
+          Note <span aria-hidden="true">·</span>
+          <time datetime={isoDate(pubDate)}>{formatDate(pubDate)}</time>
+          {updatedDate && (
+            <>
+              <span aria-hidden="true">·</span> updated{' '}
+              <time datetime={isoDate(updatedDate)}>{formatDate(updatedDate)}</time>
+            </>
+          )}
+        </p>
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+        <div class="post-meta">
+          <span class="label">By {author}</span>
+          <span class="sep" aria-hidden="true">/</span>
+          <span class="label">{minutes} min read</span>
+          {
+            tags.length > 0 && (
+              <>
+                <span class="sep" aria-hidden="true">/</span>
+                <ul class="tags">
+                  {tags.map((tag) => (
+                    <li>
+                      <a class="tag" href={`/topics/${slugifyTag(tag)}/`}>
+                        {tag}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+        </div>
+      </header>
+
+      <div class="post-layout">
+        <div class="prose">
+          <slot />
+        </div>
+
+        {
+          toc.length > 1 && (
+            <aside class="post-toc" aria-label="On this page">
+              <p class="label">On this page</p>
+              <nav>
+                <ul>
+                  {toc.map((heading) => (
+                    <li class={heading.depth === 3 ? 'toc-h3' : undefined}>
+                      <a href={`#${heading.slug}`}>{heading.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </aside>
+          )
+        }
+      </div>
+
+      <p style="margin-top: 2rem">
+        <a class="back-link" href="/blog/">← All notes</a>
+      </p>
+
+      <slot name="post-nav" />
+    </div>
+  </article>
+</Base>

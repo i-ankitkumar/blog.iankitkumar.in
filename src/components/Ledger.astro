@@ -1,0 +1,42 @@
+---
+import type { Post } from '~/lib/posts';
+import { formatLedgerDate, readingTime, slugifyTag } from '~/lib/posts';
+
+export interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="ledger">
+  {
+    posts.map((post) => (
+      <li>
+        <article class="ledger-row">
+          <time class="ledger-date" datetime={post.data.pubDate.toISOString()}>
+            {formatLedgerDate(post.data.pubDate)}
+          </time>
+          <div>
+            <h3 class="ledger-title">
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </h3>
+            <p class="ledger-desc">{post.data.description}</p>
+          </div>
+          <div class="ledger-meta">
+            <span class="ledger-reading">{readingTime(post.body)} min</span>
+            <ul class="tags">
+              {post.data.tags.slice(0, 2).map((tag) => (
+                <li>
+                  <a class="tag" href={`/topics/${slugifyTag(tag)}/`}>
+                    {tag}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      </li>
+    ))
+  }
+</ul>

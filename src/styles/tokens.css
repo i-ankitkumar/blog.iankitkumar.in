@@ -1,0 +1,89 @@
+/* ------------------------------------------------------------------
+ * blog.iankitkumar.in — Design tokens
+ *
+ * Field log: a warm paper ground, ink-black rules, one blue for a link
+ * that passed inspection and one rust for a topic tag. IBM Plex Sans
+ * reads, IBM Plex Mono dates and labels.
+ *
+ * The palette is deliberately the same family as iankitkumar.in, so the
+ * portfolio and the log read as one publication from two surfaces.
+ * ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+
+  /* Typefaces — self-hosted, no third-party request at runtime. */
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Paper + ink */
+  --bg: #f8f6ef; /* the sheet */
+  --surface: #fcfbf5; /* a raised block on the sheet */
+  --surface-2: #f1ede1; /* an inset band */
+  --fg: #1c1b16; /* ink */
+  --fg-soft: #3a382f; /* secondary ink */
+  --muted: #6e6a5c; /* labels, captions */
+  --rule: #c9c4b6; /* hairline */
+  --rule-soft: #e3ded0;
+  --rule-strong: #1c1b16; /* heavy rule: the edge of the document */
+
+  /* Accents */
+  --accent: #1b4b8f; /* a link that resolved */
+  --accent-soft: #e8eef7;
+  --tag: #7c2d12; /* rust: a topic tag */
+  --tag-soft: #f4e9e3;
+
+  /* Spacing scale */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --container: 1080px;
+  --nav-h: 3.25rem;
+  /* 58ch, not 68ch. IBM Plex Sans has a narrow `ch` (the width of "0"):
+     1ch renders only ~1.32 average characters, so 68ch produced lines of
+     90-91 characters, well past the ~75-80 character readability limit.
+     58ch renders ~77 characters in this typeface. */
+  --measure: 58ch;
+
+  /* Type scale */
+  --fs-display: clamp(2rem, 5vw, 3.15rem);
+  --fs-lede: clamp(1.05rem, 2.2vw, 1.3rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.78rem;
+
+  --radius: 2px;
+  --shadow: 4px 4px 0 0 var(--rule-strong);
+}
+
+/* Dark: the same sheet, under a desk lamp. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --bg: #171614;
+    --surface: #201e1a;
+    --surface-2: #2a2823;
+    --fg: #efebe0;
+    --fg-soft: #cbc5b7;
+    --muted: #9c9486;
+    --rule: #3d3a33;
+    --rule-soft: #2e2c27;
+    --rule-strong: #efebe0;
+
+    --accent: #7fb0e3;
+    --accent-soft: #1c2632;
+    --tag: #e08a6e;
+    --tag-soft: #2c211c;
+
+    --shadow: 4px 4px 0 0 var(--rule-strong);
+  }
+}
