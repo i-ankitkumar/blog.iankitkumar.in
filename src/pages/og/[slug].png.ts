@@ -9,7 +9,7 @@ export async function getStaticPaths() {
     props: {
       title: post.data.title,
       description: post.data.description,
-      eyebrow: `${formatDate(post.data.pubDate)} · ${post.data.tags.join(' · ')}`,
+      eyebrow: `${formatDate(post.data.pubDate)} · ${post.data.tags.slice(0, 3).join(' · ')}`,
     },
   }))
 }
